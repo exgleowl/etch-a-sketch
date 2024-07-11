@@ -1,11 +1,13 @@
+import { brush, Size } from './main.ts'
+
 let paint = false
 let x = 0
 let y = 0
 
-export function setupCanvas(canvas: HTMLCanvasElement) {
+export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) {
   const ctx = canvas.getContext('2d')!
-  ctx.canvas.width = 768
-  ctx.canvas.height = 768
+  ctx.canvas.height = height
+  ctx.canvas.width = width
 
   const getPosition = (e: MouseEvent) => {
     const { left, top } = canvas.getBoundingClientRect()
@@ -26,9 +28,9 @@ export function setupCanvas(canvas: HTMLCanvasElement) {
 
     ctx.beginPath()
 
-    ctx.lineWidth = 5
-    ctx.lineCap = 'square'
-    ctx.strokeStyle = 'green'
+    ctx.lineWidth = brush.size
+    ctx.lineCap = 'round'
+    ctx.strokeStyle = brush.color
 
     ctx.moveTo(x, y)
     getPosition(e)
@@ -40,8 +42,10 @@ export function setupCanvas(canvas: HTMLCanvasElement) {
   document.addEventListener('click', e => {
     getPosition(e)
 
-    ctx.fillStyle = 'green'
-    ctx.fillRect(x, y, 5, 5)
+    ctx.beginPath()
+    ctx.fillStyle = brush.color
+    ctx.roundRect(x - Math.round(brush.size / 2), y - Math.round(brush.size / 2), brush.size, brush.size, 50)
+    ctx.fill()
   })
 }
 

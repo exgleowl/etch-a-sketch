@@ -13,6 +13,28 @@ body {
   justify-content: center;
 }
 
+nav {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+}
+
+nav label {
+  margin: 0;
+}
+
+nav input {
+  width: 80px;
+}
+
 canvas {
   border: 1px solid black;
+  margin-top: 80px;
 }
