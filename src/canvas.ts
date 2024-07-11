@@ -15,14 +15,14 @@ export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) 
     y = e.clientY - top
   }
 
-  document.addEventListener('mousedown', e => {
+  canvas.addEventListener('mousedown', e => {
     paint = true
     getPosition(e)
   })
 
-  document.addEventListener('mouseup', () => paint = false)
+  canvas.addEventListener('mouseup', () => paint = false)
 
-  document.addEventListener('mousemove', e => {
+  canvas.addEventListener('mousemove', e => {
     if (!paint)
       return
 
@@ -39,8 +39,8 @@ export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) 
     ctx.stroke()
   })
 
-  document.addEventListener('click', e => {
-    getPosition(e)
+  canvas.addEventListener('click', e => {
+    getPosition(e)    
 
     ctx.beginPath()
     ctx.fillStyle = brush.color
