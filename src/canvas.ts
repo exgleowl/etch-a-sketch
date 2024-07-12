@@ -55,7 +55,7 @@ export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) 
 
     ctx.beginPath()
     ctx.fillStyle = brush.mode === 'rainbow' ? randomColor() : brush.color
-    ctx.roundRect(x - Math.round(brush.size / 2), y - Math.round(brush.size / 2), brush.size, brush.size, 50)
+    ctx.roundRect(x - Math.round(brush.size / 2), y - Math.round(brush.size / 2), brush.size, brush.size, Math.floor(brush.size / 2))
     ctx.fill()
   })
 }
