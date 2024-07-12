@@ -1,5 +1,6 @@
 import { brush, Size } from './main.ts'
 
+const randomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`
 let paint = false
 let x = 0
 let y = 0
@@ -26,11 +27,21 @@ export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) 
     if (!paint)
       return
 
+    if (brush.mode === 'eraser') {
+      ctx.globalCompositeOperation = 'destination-out'
+    } else {
+      ctx.globalCompositeOperation = 'source-over'
+    }
+
     ctx.beginPath()
 
     ctx.lineWidth = brush.size
     ctx.lineCap = 'round'
-    ctx.strokeStyle = brush.color
+    if (brush.mode === 'rainbow') {
+      ctx.strokeStyle = randomColor()
+    } else {
+      ctx.strokeStyle = brush.color
+    }
 
     ctx.moveTo(x, y)
     getPosition(e)
@@ -40,10 +51,10 @@ export function setupCanvas(canvas: HTMLCanvasElement, { height, width }: Size) 
   })
 
   canvas.addEventListener('click', e => {
-    getPosition(e)    
+    getPosition(e)
 
     ctx.beginPath()
-    ctx.fillStyle = brush.color
+    ctx.fillStyle = brush.mode === 'rainbow' ? randomColor() : brush.color
     ctx.roundRect(x - Math.round(brush.size / 2), y - Math.round(brush.size / 2), brush.size, brush.size, 50)
     ctx.fill()
   })

@@ -8,7 +8,8 @@ export interface Size {
 
 export interface Brush {
   color: string,
-  size: number
+  size: number,
+  mode: string
 }
 
 let size: Size = {
@@ -19,17 +20,22 @@ let size: Size = {
 export let brush: Brush = {
   color: '#000',
   size: 10,
+  mode: 'brush'
 }
 
 document.getElementById('app')!.innerHTML = `
   <nav>
-    <label for="brush-color">Brush Color</label>
     <input type="color" name="brush-color" id="brush-color">
     <label for="brush-size">Brush Size</label>
     <input type="number" name="brush-size" id="brush-size" min="1" value="5">
-    <label for="canvas-height">Canvas Height</label>
+    <select name="mode" id="mode">
+      <option value="brush" selected>Brush</option>
+      <option value="rainbow">Rainbow</option>
+      <option value="eraser">Eraser</option>
+    </select>
+    <label for="canvas-height">Height</label>
     <input type="number" name="canvas-height" id="canvas-height" min="1" value="768">
-    <label for="canvas-width">Canvas Width</label>
+    <label for="canvas-width">Width</label>
     <input type="number" name="canvas-width" id="canvas-width" min="1" value="768">
   </nav>
   <canvas id="canvas"></canvas>
@@ -56,6 +62,16 @@ document
     brush = {
       ...brush,
       size: Number(value)
+    }
+  })
+
+document
+  .getElementById('mode')!
+  .addEventListener('change', e => {
+    const { value } = e.target as HTMLSelectElement
+    brush = {
+      ...brush,
+      mode: value
     }
   })
 
